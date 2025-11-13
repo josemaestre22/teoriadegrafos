@@ -1,14 +1,19 @@
-import java.io.File
-
 fun main(args: Array<String>) {
-    val nombreArchivo = args[0]
-    val archivo = File(nombreArchivo)
-    val lineas = archivo.readLines()
-
-
-    val grafo = GrafoLista(lineas.first().toInt())
-    for (l in lineas)
+    if (args.isNotEmpty())
     {
-        println(lineas)
+        val grafo = GrafoLista(args[0])
+        grafo.recorridoAnchura()
+        grafo.contarAristas()
+
+        for (v in 0..<grafo.ady.size)
+        {
+            grafo.mostrarCamino(v)
+            println()
+        }
+
+    }
+    else
+    {
+        println("No se especifico el nombre de el archivo")
     }
 }
