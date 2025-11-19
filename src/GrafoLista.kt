@@ -3,8 +3,8 @@ import kotlin.inc
 
 class GrafoLista (val nombreArchivo: String)
 {
-    val ady = abrirArchivo()
     var esDirigido = 0
+    val ady = abrirArchivo()
 
     inner class Recorrido (val origen: Int = 0)
     {
@@ -54,10 +54,24 @@ class GrafoLista (val nombreArchivo: String)
                     distancia[v] = distancia[origen] + 1
                     profundidad(v)
                 }
+
+                else if (esDirigido == 0 && v == predecesor[origen])
+                {
+                    // Ignora la Arista Inversa  (para evitar doble conteo)
+                    continue
+                }
+
+                else if (esDirigido == 0 && origen > v)
+                {
+                    // Ignora la segunda dirección de la arista (para evitar doble conteo)
+                    continue
+                }
+
                 else {
-                    if (marcados[v] == 'G' && origen == predecesor[v]) {
+                    if (marcados[v] == 'G') {
                         cuentaAristas[1]++
                     }
+
                     else if (marcados[v] == 'N')
                     {
                         cuentaAristas[2]++
@@ -94,19 +108,31 @@ class GrafoLista (val nombreArchivo: String)
                         distancia[w] = distancia[v] + 1
                         cola.addLast(w)
                     }
-                    else if (w != predecesor[v])
+                    else if (esDirigido == 0 && w == predecesor[v])
                     {
-                        if (marcados[w] == 'G' && predecesor[v] != predecesor[w])
+                        // Ignora la Arista Inversa  (para evitar doble conteo)
+                        continue
+                    }
+
+                    else if (esDirigido == 0 && v > w)
+                    {
+                        // Ignora la segunda dirección de la arista (para evitar doble conteo)
+                        continue
+                    }
+
+                    else
+                    {
+                        if (marcados[w] == 'G')
                         {
                             cuentaAristas[1]++
                         }
+
                         else if (marcados[w] == 'N')
                         {
                             cuentaAristas[2]++
                         }
                     }
                 }
-
                 marcados[v] = 'N'
             }
         }
