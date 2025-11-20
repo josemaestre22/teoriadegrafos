@@ -1,10 +1,34 @@
-class GrafoMalla(val filas: Int, val columnas: Int, val lleno: Boolean = true)
+class GrafoMalla(val filas: Int, val columnas: Int)
 {
     val tamaño = filas * columnas
     val ady = Array(tamaño) {mutableListOf<Int>()}
 
     init {
         crearMalla()
+    }
+
+    fun crearMalla()
+    {
+        var v: Int
+        var limiteDerecha: Int
+
+        for (i in 0 ..< filas)
+        {
+            limiteDerecha =  (i+1) * columnas
+            for (j in 0..< columnas)
+            {
+                v = (i*columnas) + j
+
+                if (v+1 < limiteDerecha)
+                {
+                    agregarArista(v, v+1)
+                }
+                if (v+columnas < tamaño)
+                {
+                    agregarArista(v, v+columnas)
+                }
+            }
+        }
     }
 
     fun agregarArista(v: Int, w: Int)
@@ -37,36 +61,6 @@ class GrafoMalla(val filas: Int, val columnas: Int, val lleno: Boolean = true)
     fun grado(v: Int): Int
     {
         return ady[v].size
-    }
-
-    fun crearMalla()
-    {
-        var v: Int
-        var limiteDerecha: Int
-
-        for (i in 0 ..< filas)
-        {
-            limiteDerecha =  (i+1) * columnas
-            for (j in 0..< columnas)
-            {
-                v = (i*columnas) + j
-
-                if (v+1 < limiteDerecha)
-                {
-                    agregarArista(v, v+1)
-                }
-                if (v+columnas < tamaño)
-                {
-                    agregarArista(v, v+columnas)
-                }
-            }
-        }
-    }
-
-    fun mostrarGrafo()
-    {
-        for (v in 0..<tamaño)
-            println("$v: ${ady[v]}")
     }
 
     fun adyacentes(v: Int): List<Int>

@@ -4,7 +4,6 @@ class RAncho(val grafo: GrafoMalla)
     val distancia = IntArray(grafo.tamaño) {-1}
     val visitado = BooleanArray(grafo.tamaño) {false}
     val predecesor = IntArray(grafo.tamaño) {-1}
-    var cuenta = 0
 
     fun mostrarCamino(destino: Int)
     {
@@ -25,6 +24,7 @@ class RAncho(val grafo: GrafoMalla)
         }
     }
 
+
     fun recorrido()
     {
         val cola = ArrayDeque<Int>()
@@ -34,7 +34,6 @@ class RAncho(val grafo: GrafoMalla)
 
         visitado[origen] = true
         distancia[origen] = 0
-        cuenta++
         cola.addLast(origen)
 
         while(cola.isNotEmpty())
@@ -47,7 +46,6 @@ class RAncho(val grafo: GrafoMalla)
                 if(!visitado[w])
                 {
                     visitado[w] = true
-                    cuenta++
                     predecesor[w] = v
                     distancia[w] = distancia[v] + 1
                     cola.addLast(w)
@@ -55,7 +53,7 @@ class RAncho(val grafo: GrafoMalla)
             }
         }
 
-        println(cuenta)
+        println(distancia[v]+1)
         mostrarCamino(v)
     }
 }

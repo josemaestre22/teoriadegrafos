@@ -1,4 +1,4 @@
-class RProfMod (val grafo: GrafoMalla, val origen: Int)
+class RProfMod (val grafo: GrafoMalla, val origen: Int = 0)
 {
     val visitado = BooleanArray(grafo.tamaño) {false}
     val predecesor = IntArray(grafo.tamaño) {-1}
@@ -6,7 +6,7 @@ class RProfMod (val grafo: GrafoMalla, val origen: Int)
     fun recorrido(v: Int = this.origen)
     {
         visitado[v] = true
-        val adyacentes = grafo.adyacentes(v).toList()
+        val adyacentes = grafo.adyacentes(v).toList().shuffled()
 
         for (w in adyacentes)
         {
